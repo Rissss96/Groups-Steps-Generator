@@ -163,7 +163,7 @@ st.markdown(
 **Instructions**
 
 * Upload the required Excel files.
-* Group definitions are generated based on the group named **"All"**. This group must exist in the model. It is usually created by default; if it is missing, please create it manually, and upload that file. 
+* Group definitions are generated based on the group named **"All"**. This group must exist in the model. 
 * The **`W_Step_n`** groups are automatically generated from the **Add Structure** and **Remove Structure** operations defined in the **"Case - Static 6 - Nonlinear Stage Data"** Excel sheet.
 * After the process is completed, download the generated **Group Definitions** and **Group Assignments** files shown below.
 * Import these files into SAP2000 using the **Interactive Database Editing** feature.
