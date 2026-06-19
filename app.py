@@ -160,9 +160,13 @@ if st.button("Generate", type="primary"):
 st.markdown("---")
 st.markdown(
     """
-**Notes**
-- The app uses the same read pattern as your notebook: `header=1`, `index_col=0`.
-- `W_Step_n` groups are generated from Add/Remove Structure operations up to each step.
-- Definitions are copied from the `All` template row in *Groups 1 - Definitions.xlsx*.
+**Instructions**
+
+* Upload the required Excel files.
+* Group definitions are generated based on the group named **"All"**. This group must exist in the model. It is usually created by default; if it is missing, please create it manually, and upload that file. 
+* The **`W_Step_n`** groups are automatically generated from the **Add Structure** and **Remove Structure** operations defined in the **"Case - Static 6 - Nonlinear Stage Data"** Excel sheet.
+* After the process is completed, download the generated **Group Definitions** and **Group Assignments** files shown below.
+* Import these files into SAP2000 using the **Interactive Database Editing** feature.
+
 """
 )
