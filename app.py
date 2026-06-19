@@ -30,7 +30,6 @@ with col3:
 color_name = st.text_input("Output color (exact name used by your model)", value="DarkMagenta")
 
 
-
 def build_outputs(df_static_6, df_group_def, df_group_assignments, staged_case, steps, color):
     # ---- 1) Build df_steps_and_groups ----
     rows = []
@@ -126,32 +125,19 @@ if st.button("Generate", type="primary"):
                 st.subheader("Preview: New Group Assignments")
                 st.dataframe(result, use_container_width=True, height=260)
 
-                # In-memory Excel for download
-                buf_defs = BytesIO()
-                with pd.ExcelWriter(buf_defs, engine="openpyxl") as writer:
-                    df_new_groups.to_excel(writer, sheet_name="Sheet1")
-                buf_defs.seek(0)
+                # In-memory Excel for single download (both sheets)
+                buf_all = BytesIO()
+                with pd.ExcelWriter(buf_all, engine="openpyxl") as writer:
+                    df_new_groups.to_excel(writer, sheet_name="New_Group_Definitions")
+                    result.to_excel(writer, index=False, sheet_name="New_Group_Assignments")
+                buf_all.seek(0)
 
-                buf_asg = BytesIO()
-                with pd.ExcelWriter(buf_asg, engine="openpyxl") as writer:
-                    result.to_excel(writer, index=False, sheet_name="Sheet1")
-                buf_asg.seek(0)
-
-                d1, d2 = st.columns(2)
-                with d1:
-                    st.download_button(
-                        "Download New_Group_Definitions.xlsx",
-                        data=buf_defs,
-                        file_name="New_Group_Definitions.xlsx",
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    )
-                with d2:
-                    st.download_button(
-                        "Download New_Group_Assignments.xlsx",
-                        data=buf_asg,
-                        file_name="New_Group_Assignments.xlsx",
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    )
+                st.download_button(
+                    "Download Generated_Group_Files.xlsx",
+                    data=buf_all,
+                    file_name="Generated_Group_Files.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
 
         except Exception as e:
             st.exception(e)
@@ -165,7 +151,7 @@ st.markdown(
 * Upload the required Excel files.
 * Group definitions are generated based on the group named **"All"**. This group must exist in the model. 
 * The **`W_Step_n`** groups are automatically generated from the **Add Structure** and **Remove Structure** operations defined in the **"Case - Static 6 - Nonlinear Stage Data"** Excel sheet.
-* After the process is completed, download the generated **Group Definitions** and **Group Assignments** files shown below.
+* After the process is completed, download the generated file (with both **Group Definitions** and **Group Assignments** sheets).
 * Import these files into SAP2000 using the **Interactive Database Editing** feature.
 
 """
